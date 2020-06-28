@@ -1,0 +1,39 @@
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently */
+}
+
+.container{
+    width: max-content;
+    height: 100px;
+
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+}
+
+h1{
+    margin: 0;
+    font-family: 'Consolas';
+}
+
+#time{
+    font-size: 10vh;
+    cursor: pointer;
+}
+
+#text{
+    font-size: 5vh;
+}
+
+#text:hover{
+    cursor: pointer;
+}

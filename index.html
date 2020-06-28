@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <title>hours of coding</title>
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+
+    <body>
+        <div class='container noselect'>
+            <h1 id='time' onclick="timer()">0</h1>
+            <h1 id='text'>seconds of comp sci</h1>
+        </div>
+    </body>
+    
+    <script>
+        let timeDisplay = document.getElementById('time');
+        let textDisplay = document.getElementById('text');
+
+        let time = localStorage.getItem('time');
+        let displayType = localStorage.getItem('display');
+
+        let interval;
+
+        // init
+        if(time === null){
+            time = 0;
+            localStorage.setItem('time', '0');
+            timeDisplay.innerHTML = 0;
+        }
+        else{
+            timeDisplay.innerHTML = time;
+        }
+
+        switchDisplay();
+
+        // onclick use an enumerable???
+        textDisplay.onclick = function(){
+            if(displayType === "s"){
+                displayType = 'm';
+            }
+            else if(displayType === "m"){
+                displayType = 'hr';
+            }
+            else if(displayType === "hr"){
+                displayType = 'd';
+            }
+            else if(displayType === "d"){
+                displayType = 's';
+            }
+            localStorage.setItem('display', displayType);
+            switchDisplay();
+        }
+
+
+        // mouseovers / mouseouts
+        timeDisplay.onmouseover = function(){
+            if(interval){
+                text.innerHTML = "pause your progress"
+            }
+            else{
+                text.innerHTML = "start your learning"
+            }
+        }
+
+        timeDisplay.onmouseout = function(){
+            switchDisplay();
+        }
+
+        // thiiiiiiiiiis can be simplified, SO MUCH REDUNDANCY
+        // easily a class
+        textDisplay.onmouseover = function(){
+            if(displayType === "s"){
+                text.innerHTML = "minutes? of comp sci";
+            }
+            else if(displayType === "m"){
+                text.innerHTML = "hours? of comp sci";
+            }
+            else if(displayType === "hr"){
+                text.innerHTML = "days? of comp sci";
+            }
+            else if(displayType === "d"){
+                text.innerHTML = "seconds? of comp sci";
+            }
+        }
+
+        textDisplay.onmouseout = function(){
+            switchDisplay();
+        }
+        
+        // use a date class?
+        function timer(){
+            time = parseInt(time);
+            if(interval){
+                clearInterval(interval);
+                interval = undefined;
+            }
+            else{
+                interval = setInterval(() => {
+                    time += 1;
+                    localStorage.setItem('time', time);
+                    
+                    // this is pretty redundant as welll, can be simplified a lot
+                    if(displayType === "m"){
+                        timeDisplay.innerHTML = (time/60).toFixed(2);
+                        document.title = (time/60).toFixed(2) + " minutes of comp sci";
+                    }
+                    
+                    else if(displayType === "hr"){
+                        timeDisplay.innerHTML = (time/3600).toFixed(3);
+                        document.title = (time/3600).toFixed(3) + " hours of comp sci";
+                    }
+
+                    else if(displayType === "d"){
+                        timeDisplay.innerHTML = (time/86400).toFixed(4);
+                        document.title = (time/86400).toFixed(4) + " days of comp sci";
+                    }
+
+                    else{
+                        timeDisplay.innerHTML = time;
+                        document.title = time + " seconds of comp sci";
+                    }
+                }, 1000);
+            }
+        }
+
+        // lots of redundant code, can be simplified a lot
+        function switchDisplay(){
+            
+            if(displayType === null){
+                localStorage.setItem('display', 's');
+                displayType = 's';
+            }
+            else{
+                if(displayType === "s"){
+                    timeDisplay.innerHTML = time;
+                    document.title = time + " seconds of comp sci";
+                    text.innerHTML = "seconds of comp sci";
+                }
+                else if(displayType === "m"){
+                    timeDisplay.innerHTML = (time/60).toFixed(2);
+                    document.title = (time/60).toFixed(2) + " minutes of comp sci";
+                    text.innerHTML = "minutes of comp sci";
+                }
+                else if(displayType === "hr"){
+                    timeDisplay.innerHTML = (time/3600).toFixed(3);
+                    document.title = (time/3600).toFixed(3) + " hours of comp sci";
+                    text.innerHTML = "hours of comp sci";
+                }
+                else if(displayType === "d"){
+                    timeDisplay.innerHTML = (time/86400).toFixed(4);
+                    document.title = (time/86400).toFixed(4) + " days of comp sci";
+                    text.innerHTML = "days of comp sci";
+                }
+            }
+        }
+    </script>
+
+</html>
